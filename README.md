@@ -23,4 +23,4 @@ A fair amount of the code here is adapted from [], an implementation of BEM for 
 
 ### Testing
 
-![Test Image](/images/maxresdefault.jpg)
+<img src="/images/maxresdefault.jpg" alt="Drawing" style="width: 50px;"/>
