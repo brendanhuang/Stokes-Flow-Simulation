@@ -1,5 +1,5 @@
 # Stokes-Flow-Simulation
-Matlab implementation of boundary element method (BEM) and method of fundamental solutions (MFS) for simulation of Stokes flow based on traction and velocity boundary conditions.
+A Matlab implementation of boundary element method (BEM) and method of fundamental solutions (MFS) for simulation of Stokes flow based on traction and velocity boundary conditions.
 
 This repository contains an implementation of numerical simulations of low Reynold's number flow (Stokes flow). The work was done as part of my doctoral thesis at Yale University. There are three possible types of simulations that can be performed with the code 
 
