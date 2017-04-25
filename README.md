@@ -20,3 +20,7 @@ There is also a tutorial explaining the technical details on the implementation 
 A fair amount of the code here is adapted from [], an implementation of BEM for Poisson's equation. The Stokes flow implementation is follows the overall scheme of []. Additional background can be found in [] and [].
 
 # Tutorial files:
+
+### Testing
+
+![Test Image](/images/maxresdefault.jpg)
