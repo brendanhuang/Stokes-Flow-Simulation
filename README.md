@@ -1,7 +1,9 @@
 # Stokes-Flow-Simulation
-A Matlab implementation of boundary element method (BEM) and method of fundamental solutions (MFS) for simulation of Stokes flow based on traction and velocity boundary conditions.
+Stokes-Flow-Simulation is a Matlab implementation of boundary element method (BEM) and method of fundamental solutions (MFS) for simulation of Stokes flow based on traction and velocity boundary conditions.
 
-This repository contains an implementation of numerical simulations of low Reynold's number flow (Stokes flow). The work was done as part of my doctoral thesis at Yale University. There are three possible types of simulations that can be performed with the code:
+<img src="/images/flowfield_streamfunction.png" width = "40%" align="middle">
+
+This repository contains an implementation of numerical simulations of low Reynold's number flow (Stokes flow). The work was done as part of my doctoral thesis at Yale University [1]. There are three possible types of simulations that can be performed with the code:
 
 <ol>
 <li> The method of fundamental solutions (MFS) to solve for flow in 2D
@@ -9,7 +11,13 @@ This repository contains an implementation of numerical simulations of low Reyno
 <li> The BEM to solve for flow in 3D
 </ol>
 
-(MFS in 3D has been left out due to the unregularized version of MFS being an ill-posed problem and thus sensitive to numerical errors.) In all cases, the numerics solve for the flow in the domain after specifying traction and flow boundary conditions.
+(MFS in 3D has been left out due to the unregularized version of MFS being an ill-posed problem and thus sensitive to numerical errors.) In all cases, the numerics solve for the flow in the domain after specifying traction and flow boundary conditions. The default setting is to simulate a geometry similar to a [lid-driven cavity](https://www.cfd-online.com/Wiki/Lid-driven_cavity_problem).
+
+# Installation
+
+1. Download folder containing m-files.
+2. Add all folders and subfolders to path in Matlab.
+3. Open doit_sim_BEM_2D.m and execute cell by cell.
 
 # How to use this repository
 The repository contains a series of .m files as well as a tutorial document (StokesFlowSimulation_Tutorial.pdf). The m-files are separated into "doit" files that can be run immediately. These doit files call back end functions.  All of the functions are explained in the tutorial document. 
@@ -28,11 +36,3 @@ A fair amount of the code here is adapted from [2], an implementation of BEM for
 [4] C. Pozrikidis. Boundary integral and singularity methods for linearized viscous flow. Cambridge University Press, Cambridge England; New York, 1992.
 
 [5] C. Pozrikidis. Introduction to theoretical and computational fluid dynamics. Oxford University Press, Oxford England; New York, 1997.
-
-
-
-# Tutorial files:
-
-### Testing
-
-<img src="/images/flowfield_streamfunction.png" width = "40%">
