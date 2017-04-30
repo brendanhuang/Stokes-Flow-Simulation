@@ -20,9 +20,9 @@ In all cases, the routines numerically solve for the vectorial flow field in the
 3. Open doit_sim_BEM_2D.m and execute cell by cell.
 
 # How to use this repository
-The repository contains a series of .m files as well as a tutorial document (StokesFlowSimulation_Tutorial.pdf). The m-files are separated into "doit" files that can be run immediately. These doit files call back end functions.  All of the functions are explained in the tutorial document. 
+The repository contains a series of m-files as well as a tutorial document. The m-files in turn are separated into "doit" executable files that can be run immediately. These files are all located in the scripts folder. The executable files in turn call back-end functions. The functions are divided folderwise into bem_2d_functions, bem_3d_functions, and mfs_2d_functions based on which simulation they are called by.  In addition, there is a common shared folder of numerical routines used by all simulation methods, as well as some visualization scripts. 
 
-The tutorial explains the underlying theory, technical details, and structure of the implementation of these numerical simulations. The tutorial itself is an appendix in my thesis, the full version of which can also be downloaded on my github page (@brendanhuang).
+The tutorial (StokesFlowSimulation_Tutorial.pdf) explains the underlying theory, technical details, and structure of the implementation of these numerical simulations. All of the scripts included are explained in the tutorial document. The tutorial itself is an appendix in my thesis, the full version of which can also be downloaded on my github page (@brendanhuang).
 
 # References
 A couple subroutines are adapted from [2], an implementation of BEM for Laplace's equation. The Stokes flow implementation follows the overall scheme of [3]. Additional background can be found in [4] and [5].
