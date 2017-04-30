@@ -11,7 +11,7 @@ This repository contains an implementation of numerical simulations of low Reyno
 <li> The BEM to solve for flow in 3D
 </ol>
 
-In all cases, the routines numerically solve for the vectorial flow field in the interior of the domain after specifying traction and/or flow boundary conditions. The default setting is to simulate a geometry similar to a [lid-driven cavity](https://www.cfd-online.com/Wiki/Lid-driven_cavity_problem). Pressure and the stream function can also be directly computed in certain cases.
+In all cases, the routines numerically solve for the vectorial flow field in the interior of the domain after specifying traction and/or flow boundary conditions. The default setting is to simulate a geometry similar to a [lid-driven cavity](https://www.cfd-online.com/Wiki/Lid-driven_cavity_problem). In certain cases, the pressure field, shear stress tensor, and/or stream function can also be directly computed.
 
 # Installation
 
