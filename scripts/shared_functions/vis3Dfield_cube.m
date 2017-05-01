@@ -44,9 +44,15 @@
 % vertpts, elemverts: vertices and indices of triangles to plot of cube
 % surface
 % 
-% Note, this script calls the plotsurface function from: 
-% 
-% as well as the quiver3D function from:
+% Note, this script calls the 'plotsurface' function from: 
+% https://www.mathworks.com/matlabcentral/fileexchange/46260-3d-differential-canny-edge-detector
+%
+% as well as the 'quiver3D' function from:
+% https://www.mathworks.com/matlabcentral/fileexchange/12285-3d-quiver-with-volumized-arrows
+%
+% Original source code for these functions can be downloaded at Mathworks
+% file exchange, but have also been included with this function under
+% licensing terms.
 %
 function vis3Dfield_cube(corner1,corner2,x,y,z,u,v,w,bcx,bcy,bcz,bcu,bcv,bcw,vertpts,elemvert)
 

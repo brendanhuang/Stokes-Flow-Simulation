@@ -1,0 +1,295 @@
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>quiver3D - Output a collection of arrows with various color and shape options</title>
+      <meta name="generator" content="MATLAB 7.0.1">
+      <meta name="date" content="2006-09-18">
+      <meta name="m-file" content="demoQuiver3D"><style>
+body {
+  background-color: white;
+  margin:10px;
+}
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+pre.codeinput {
+  margin-left: 30px;
+}
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.showbuttons {
+  margin-left: 30px;
+  border: solid black 2px;
+  padding: 4px;
+  background: #EBEFF3;
+}
+
+pre.codeoutput {
+  color: gray;
+  font-style: italic;
+}
+pre.error {
+  color: red;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows.  On Gecko-based browsers, the shrink-to-fit doesn't work. */ 
+p,h1,h2,div {
+  /* for MATLAB's browser */
+  width: 600px;
+  /* for Mozilla, but the "width" tag overrides it anyway */
+  max-width: 600px;
+  /* for IE */
+  width:expression(document.body.clientWidth > 620 ? "600px": "auto" );
+}
+
+    </style></head>
+   <body>
+      <h1>quiver3D - Output a collection of arrows with various color and shape options</h1>
+      <introduction></introduction>
+      <h2>Contents</h2>
+      <div>
+         <ul>
+            <li><a href="#1">Syntax</a></li>
+            <li><a href="#2">Description</a></li>
+            <li><a href="#3">Example: Basic Call</a></li>
+            <li><a href="#4">Lighting Effects</a></li>
+            <li><a href="#5">Arrow-specific colors</a></li>
+            <li><a href="#6">Change of stemRatios</a></li>
+            <li><a href="#7">Helix Example</a></li>
+            <li><a href="#8">Credits</a></li>
+         </ul>
+      </div>
+      <h2>Syntax<a name="1"></a></h2>
+      <div>
+         <ul>
+            <li>quiver3D(posArray, magnitudeArray)</li>
+            <li>quiver3D(posArray, magnitudeArray, one_ShortNameColor)</li>
+            <li>quiver3D(posArray, magnitudeArray, one_LongNameColor)</li>
+            <li>quiver3D(posArray, magnitudeArray, one_RGBvalueColor)</li>
+            <li>quiver3D(posArray, magnitudeArray, many_RGBvalueColor)</li>
+         </ul>
+      </div>
+      <h2>Description<a name="2"></a></h2>
+      <div>
+         <ul>
+            <li>quiver3D(posArray, magnitudeArray) - plot an arrow for each row of posArray in form of (x,y,z) with delta values corresponding
+               to                                        the rows of magnitudeArray (u,v,w) using arrow3D, which allows for a           
+                                           three-dimensional arrow representation.  Since arrow3D uses 'surf', you may use 'camlight'   
+                                                   and 'lighting' to add more powerful visual effects of the data.
+            </li>
+         </ul>
+      </div>
+      <div>
+         <ul>
+            <li>quiver3D(..., one_ShortNameColor) - colors all arrows the same color using MATLAB's ShortName color convention, {'r','g',...}
+               as per ColorSpec.
+            </li>
+         </ul>
+      </div>
+      <div>
+         <ul>
+            <li>quiver3D(..., one_LongNameColor) - colors all arrows the same color using MATLAB's LongName color convention, {'red','green',...}
+               as per ColorSpec.
+            </li>
+         </ul>
+      </div>
+      <div>
+         <ul>
+            <li>quiver3D(..., one_RGBvalueColor) - colors all arrows the same color using the three element vector representation. For example
+               [0, 1, 0.5]
+            </li>
+         </ul>
+      </div>
+      <div>
+         <ul>
+            <li>quiver3D(..., many_RGBvalueColor) - a distinct color is assigned each of the individual arrows in the quiver in Nx3 format.</li>
+         </ul>
+      </div>
+      <h2>Example: Basic Call<a name="3"></a></h2><pre class="codeinput">    [X, Y] = meshgrid(0:3:9, 0:3:9);
+    Z = ones(size(X));
+    U = zeros(size(X));
+    V = U;
+    W = ones(size(X))*8;
+    posArray = [X(:),Y(:),Z(:)];
+    magnitudeArray = [U(:),V(:),W(:)];
+    quiverHandle = quiver3D(posArray, magnitudeArray, <span class="string">'r'</span>);
+
+    hold <span class="string">on</span>;
+    axis <span class="string">equal</span>;
+    grid <span class="string">on</span>;
+    xlabel(<span class="string">'X'</span>); ylabel(<span class="string">'Y'</span>); zlabel(<span class="string">'Z'</span>);
+    view(20,30);
+</pre><img vspace="5" hspace="5" src="demoQuiver3D_01.png"> <h2>Lighting Effects<a name="4"></a></h2><pre class="codeinput">    lighting <span class="string">phong</span>;
+    camlight <span class="string">head</span>;
+</pre><img vspace="5" hspace="5" src="demoQuiver3D_02.png"> <h2>Arrow-specific colors<a name="5"></a></h2><pre class="codeinput">    numArrows = size(posArray,1);
+    arrowColors = zeros(numArrows, 3);
+    Rstream = (0:1/(numArrows-1):1)';
+    arrowColors(:,1) = Rstream;
+    delete(quiverHandle);
+    colorQuiverHandle = quiver3D(posArray, magnitudeArray, arrowColors);
+</pre><img vspace="5" hspace="5" src="demoQuiver3D_03.png"> <h2>Change of stemRatios<a name="6"></a></h2><pre class="codeinput">    delete(colorQuiverHandle);
+    colorQuiverHandle = quiver3D(posArray, magnitudeArray, arrowColors, 0.9);
+</pre><img vspace="5" hspace="5" src="demoQuiver3D_04.png"> <h2>Helix Example<a name="7"></a></h2><pre class="codeinput">    radius = 7;   height = 1;  numRotations = 2;  numPoints = 25;  arrowScale = 0.8;
+    [posArray1, magnitudeArray1] = helix(radius, height, numRotations, numPoints, arrowScale);
+    arrowColors1 = zeros(numPoints, 3);
+    BlackToWhite = (0:1/(numPoints-1):1);
+    WhiteToBlack = (1:-1/(numPoints-1):0);
+    arrowColors1(:,1) = WhiteToBlack';
+    arrowColors1(:,2) = BlackToWhite';
+
+    radius = 2;   height = 0.66;  numRotations = 3;
+    [posArray2, magnitudeArray2] = helix(radius, height, numRotations, numPoints, arrowScale);
+    arrowColors2 = zeros(numPoints, 3);
+    arrowColors2(:,3) = BlackToWhite';
+
+    delete(colorQuiverHandle);
+    quiver3D(posArray1, magnitudeArray1, arrowColors1, 0.6);
+    quiver3D(posArray2, magnitudeArray2, arrowColors2, 0.6);
+    axis <span class="string">equal</span>;
+    grid <span class="string">on</span>;
+    xlabel(<span class="string">'X'</span>); ylabel(<span class="string">'Y'</span>); zlabel(<span class="string">'Z'</span>);
+    view(20,10);
+    axis <span class="string">tight</span>;
+    camlight <span class="string">head</span>;
+    lighting <span class="string">phong</span>;
+</pre><img vspace="5" hspace="5" src="demoQuiver3D_05.png"> <h2>Credits<a name="8"></a></h2>
+      <p>Author: Shawn Arseneau</p>
+      <p>Created: September 15, 2006</p>
+      <p class="footer"><br>
+         Published with MATLAB&reg; 7.0.1<br></p>
+      <!--
+##### SOURCE BEGIN #####
+%% quiver3D - Output a collection of arrows with various color and shape options
+
+%% Syntax
+% * quiver3D(posArray, magnitudeArray)
+% * quiver3D(posArray, magnitudeArray, one_ShortNameColor) 
+% * quiver3D(posArray, magnitudeArray, one_LongNameColor) 
+% * quiver3D(posArray, magnitudeArray, one_RGBvalueColor) 
+% * quiver3D(posArray, magnitudeArray, many_RGBvalueColor)
+%
+%% Description
+% * quiver3D(posArray, magnitudeArray) - plot an arrow for each row of posArray in form of (x,y,z) with delta values corresponding to
+%                                        the rows of magnitudeArray (u,v,w) using arrow3D, which allows for a 
+%                                        three-dimensional arrow representation.  Since arrow3D uses 'surf', you may use 'camlight' 
+%                                        and 'lighting' to add more powerful visual effects of the data.
+% 
+% * quiver3D(..., one_ShortNameColor) - colors all arrows the same color using MATLAB's ShortName color convention, {'r','g',...} as per ColorSpec.
+% 
+% * quiver3D(..., one_LongNameColor) - colors all arrows the same color using MATLAB's LongName color convention, {'red','green',...} as per ColorSpec.
+% 
+% * quiver3D(..., one_RGBvalueColor) - colors all arrows the same color using the three element vector representation. For example [0, 1, 0.5]
+% 
+% * quiver3D(..., many_RGBvalueColor) - a distinct color is assigned each of the individual arrows in the quiver in Nx3 format.
+% 
+
+%% Example: Basic Call
+    [X, Y] = meshgrid(0:3:9, 0:3:9);
+    Z = ones(size(X));
+    U = zeros(size(X));
+    V = U;
+    W = ones(size(X))*8;
+    posArray = [X(:),Y(:),Z(:)];
+    magnitudeArray = [U(:),V(:),W(:)];
+    quiverHandle = quiver3D(posArray, magnitudeArray, 'r');
+    
+    hold on;
+    axis equal; 
+    grid on;
+    xlabel('X'); ylabel('Y'); zlabel('Z');
+    view(20,30);
+    
+%% Lighting Effects
+    lighting phong;
+    camlight head;
+
+%% Arrow-specific colors
+    numArrows = size(posArray,1);
+    arrowColors = zeros(numArrows, 3);  
+    Rstream = (0:1/(numArrows-1):1)';
+    arrowColors(:,1) = Rstream;
+    delete(quiverHandle);    
+    colorQuiverHandle = quiver3D(posArray, magnitudeArray, arrowColors);
+
+%% Change of stemRatios
+    delete(colorQuiverHandle);
+    colorQuiverHandle = quiver3D(posArray, magnitudeArray, arrowColors, 0.9);
+   
+    
+%% Helix Example
+    radius = 7;   height = 1;  numRotations = 2;  numPoints = 25;  arrowScale = 0.8;
+    [posArray1, magnitudeArray1] = helix(radius, height, numRotations, numPoints, arrowScale);
+    arrowColors1 = zeros(numPoints, 3);
+    BlackToWhite = (0:1/(numPoints-1):1);
+    WhiteToBlack = (1:-1/(numPoints-1):0);
+    arrowColors1(:,1) = WhiteToBlack';
+    arrowColors1(:,2) = BlackToWhite';
+    
+    radius = 2;   height = 0.66;  numRotations = 3;  
+    [posArray2, magnitudeArray2] = helix(radius, height, numRotations, numPoints, arrowScale);    
+    arrowColors2 = zeros(numPoints, 3);
+    arrowColors2(:,3) = BlackToWhite';
+
+    delete(colorQuiverHandle);
+    quiver3D(posArray1, magnitudeArray1, arrowColors1, 0.6);
+    quiver3D(posArray2, magnitudeArray2, arrowColors2, 0.6);
+    axis equal;
+    grid on;
+    xlabel('X'); ylabel('Y'); zlabel('Z');
+    view(20,10);
+    axis tight;
+    camlight head;
+    lighting phong;
+    
+    
+%% Credits
+% Author: Shawn Arseneau
+% 
+% Created: September 15, 2006
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+-->
+   </body>
+</html>
