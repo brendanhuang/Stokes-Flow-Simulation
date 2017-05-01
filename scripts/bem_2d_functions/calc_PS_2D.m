@@ -120,7 +120,7 @@ function PD2D=pressure_double_2d(x,y,x0,y0,normal)
       PD(2,1,:)=2*(2*dx.*dy./dr.^4);
       PD(2,2,:)=2*(-1./dr.^2+2*dy.^2./dr.^4);
 
-      % we have to do with our normal vector again
+      % we have to dot with our normal vector again
       for j=1:2
             for k=1:np
             PD2D(j,k)=normal*squeeze(PD(j,:,k))';

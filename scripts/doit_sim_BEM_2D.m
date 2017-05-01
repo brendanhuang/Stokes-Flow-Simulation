@@ -80,7 +80,9 @@ title('Plot of boundaries of problems, with x marking center of each boundary el
 xlabel('x coord')
 ylabel('y coord')
 %% Calculate the Green's Function matrix (single and double layer potential)
+tic
 [SLmat,DLmat]=calc_Amat_BEM_2D(p,vertpts,elemvert,normv,true);
+toc
 %% Solve the boundary integral equation (see tutorial Eq. 41)
 BCtotal=[bcu;bcv];
 [u0,f0,ub,vb,fx,fy] = solve_mixedBC(SLmat,DLmat,BCtotal,visc,alpha,'2D');
@@ -93,8 +95,9 @@ BCtotal=[bcu;bcv];
 intpts=[xint(:),yint(:)];
 
 %% Calculate the single and double layer potential effects on the interior points
+tic
 [SLint,DLint]=calc_Amat_BEM_2D(intpts,vertpts,elemvert,normv,false);
-
+toc
 %% Calculate the pressure and shear stress single and double layer potentials
 [PSLint,PDLint,SSLint,SDLint]=calc_PSmat_BEM_2D(intpts,vertpts,elemvert,normv,false);
 
