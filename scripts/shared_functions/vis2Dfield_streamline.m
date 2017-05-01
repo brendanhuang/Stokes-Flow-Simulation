@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Stokes-Flow-Simulation by Brendan Huang
-% Script: vis2Dfield_quiver
+% Script: vis2Dfield_streamline
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -28,38 +28,36 @@
 % SOFTWARE.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Description: This function plots the flow field simulated in
-% two-dimensions by the Stokes-Flow-Simulation. It additionally plots the
-% boundary points and the flow on the boundary. Square represent stationary
-% points on the boundary
+% Description: This function plots the streamfunction simulated in
+% two-dimensions by the Stokes-Flow-Simulation. Lines  represent contours
+% of the streamfunction, which are known as streamlines. It additionally plots 
+% the boundary points and the flow on the boundary. Square represent stationary
+% points on the boundary.
 % 
 % 
 %
 % Inputs:
 % x, y: x and y coordinates of interior points
-% u, v: flow vector of interior points
+% psi: streamfunction
 % xbc, ybc: x and y coordinates of boundary elements
 % ubc, vbc: flow vector of boundary elements
 % fignum: optional to specify numbering of Matlab figure
-% 
 
-function vis2Dfield_quiver(x,y,u,v,xbc,ybc,ubc,vbc,fignum)
+function vis2Dfield_streamline(x,y,psi,xbc,ybc,ubc,vbc,fignum)
 
-if nargin<9
+if nargin < 8
     fignum=1;
 end
 
 % Find elements where there is flow on the boundary
+
 ind1=bitor(ubc~=0,vbc~=0);
-if numel(ubc(ind1))>10
 % for visualization sake, we don't plot the flow at every boundary point if
 % we have more than 10. We'll use our function reducemat to downsample our
 % points
-   % ds is downsample factor
-   ds=floor(numel(ubc(ind1))/10); 
-   
-   % leftover is how many values we omit at the end
-   leftover=mod(numel(ubc(ind1)),ds);
+if numel(ubc(ind1))>10
+   ds=floor(numel(ubc(ind1))/10);    % ds is downsample factor
+   leftover=mod(numel(ubc(ind1)),ds);    % leftover is how many values we omit at the end
    unz=reducemat(ubc(ind1),ds,leftover);
    vnz=reducemat(vbc(ind1),ds,leftover);
    xnz=reducemat(xbc(ind1),ds,leftover);
@@ -71,6 +69,7 @@ else
    ynz=ybc(ind1);
 end
 
+
 % Find the boundaries of domain
 x1=min(x(:));
 x2=max(x(:));
@@ -80,15 +79,18 @@ xl=x2-x1;
 yl=y2-y1;
 
 % set color of boundary points
-boundarycolor=[0 0 0]/255; 
+boundarycolor=[0 0 0]/255;
 figure(fignum);
+%quiverc(imresize(x,0.3),imresize(y,0.3),imresize(u,0.3),imresize(v,0.3));hold on;
+%gg2=parula(64);
+contour(x,y,psi,'Linewidth',3);
+set(gca,'XTick',[])
+set(gca,'YTick',[])
+hold on;
 
-% call the color quiver function
-quiverc(x(:),y(:),u(:),v(:));hold on;
-
-% plot the boundaries
 plot(xbc(~ind1),ybc(~ind1),'s','MarkerEdgeColor',boundarycolor,'LineWidth',1.5);
 axis([x1-0.1*xl, x2+0.1*xl, y1-0.1*yl, y2+0.1*yl]);
+
 
 % quiver the moving portion of the boundary
 g1=quiver(xnz,ynz,unz,vnz,0.2,'Linewidth',1.5);
